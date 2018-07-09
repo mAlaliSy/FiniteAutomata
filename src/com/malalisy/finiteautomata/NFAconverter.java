@@ -72,8 +72,10 @@ public class NFAconverter {
     private void findEpsilonClosure(int state, Set<Integer> eclosure) {
         for (int i = 0; i < stateGraph.length; i++) {
             if (stateGraph[state][i].contains(EPSILON)) {
-                eclosure.add(i);
-                findEpsilonClosure(i, eclosure);
+                if(!eclosure.contains(i)) {
+                    eclosure.add(i);
+                    findEpsilonClosure(i, eclosure);
+                }
             }
         }
     }
