@@ -51,4 +51,11 @@ public class DFA {
         }
     }
 
+    public List<Set<Integer>> getVertices() {
+        return vertices;
+    }
+
+    public List<List<Pair<String, Integer>>> getAdjacencyList() {
+        return adjacencyList;
+    }
 }

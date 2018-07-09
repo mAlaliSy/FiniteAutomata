@@ -43,7 +43,6 @@ public class MainForm {
         mxGraphComponent graphComponent = new mxGraphComponent(graphView);
         graphComponent.getViewport().setBackground(Constants.BACKGROUND_COLOR);
 
-        graphPanel.setLayout(new GridLayout());
         graphPanel.add(graphComponent);
 
         xLabel.setOpaque(true);
@@ -142,7 +141,8 @@ public class MainForm {
             }
 
             NFAconverter nfAconverter = new NFAconverter(adjacencyMatrix);
-            nfAconverter.convert().print();
+            DFAviewer dfAviewer = new DFAviewer(nfAconverter.convert());
+            dfAviewer.show();
         });
     }
 

@@ -29,6 +29,7 @@ public class NFAconverter {
 
         while (!unmarkedStates.isEmpty()) {
             List<Set<Integer>> itemsToBeRemoved = new ArrayList<>();
+            List<Set<Integer>> itemsToBeAdded = new ArrayList<>();
 
             for (Set<Integer> state : unmarkedStates) {
 
@@ -44,7 +45,7 @@ public class NFAconverter {
                     }
 
                     if (!markedStates.contains(newState)) {
-                        unmarkedStates.add(newState);
+                        itemsToBeAdded.add(newState);
                         dfa.addVertex(newState);
                     }
 
@@ -56,6 +57,7 @@ public class NFAconverter {
             }
 
             unmarkedStates.removeAll(itemsToBeRemoved);
+            itemsToBeAdded.addAll(itemsToBeAdded);
 
         }
 
@@ -72,7 +74,7 @@ public class NFAconverter {
     private void findEpsilonClosure(int state, Set<Integer> eclosure) {
         for (int i = 0; i < stateGraph.length; i++) {
             if (stateGraph[state][i].contains(EPSILON)) {
-                if(!eclosure.contains(i)) {
+                if (!eclosure.contains(i)) {
                     eclosure.add(i);
                     findEpsilonClosure(i, eclosure);
                 }
