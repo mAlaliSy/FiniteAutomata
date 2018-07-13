@@ -1,6 +1,5 @@
 package com.malalisy.finiteautomata;
 
-import com.malalisy.finiteautomata.ui.DFAviewer;
 import com.malalisy.finiteautomata.ui.MainForm;
 import com.malalisy.finiteautomata.ui.components.FrameDragListener;
 
@@ -16,6 +15,7 @@ import static com.malalisy.finiteautomata.Constants.EPSILON;
 public class Main {
 
     public static void main(String[] args) {
+
         MainForm mainForm = new MainForm();
         mainForm.show();
     }

@@ -5,6 +5,7 @@ import com.malalisy.finiteautomata.Pair;
 import com.malalisy.finiteautomata.ui.components.FrameDragListener;
 import com.malalisy.finiteautomata.ui.components.GraphView;
 import com.mxgraph.layout.hierarchical.mxHierarchicalLayout;
+import com.mxgraph.layout.mxCircleLayout;
 import com.mxgraph.layout.mxParallelEdgeLayout;
 import com.mxgraph.swing.mxGraphComponent;
 
@@ -34,25 +35,28 @@ public class DFAviewer {
         List<Set<Integer>> v = dfa.getVertices();
         Object[] vertices = new Object[v.size()];
         for (int i = 0; i < v.size(); i++) {
-            vertices[i] = graphView.insertVertex(graphView.getDefaultParent(),
-                    null, "" + i, 0, 0,
-                    50, 50);
+            if (dfa.isAcceptedEnd(i)) {
+                vertices[i] = graphView.insertVertex(graphView.getDefaultParent(),
+                        null, "" + i, 0, 0,
+                        50, 50, "shape=doubleEllipse;");
+            } else {
+                vertices[i] = graphView.insertVertex(graphView.getDefaultParent(),
+                        null, "" + i, 0, 0,
+                        50, 50);
+            }
         }
 
         List<List<Pair<String, Integer>>> adjacencyList = dfa.getAdjacencyList();
         for (int i = 0; i < adjacencyList.size(); i++) {
             List<Pair<String, Integer>> adjacentStates = adjacencyList.get(i);
-            for (int j = 0; j < adjacentStates.size(); j++) {
-                for (Pair<String, Integer> edge : adjacentStates) {
-                    graphView.insertEdge(graphView.getDefaultParent(), null, edge.getFirst(), vertices[j], vertices[edge.getSecond()]);
-                }
+            for (Pair<String, Integer> edge : adjacentStates) {
+                graphView.insertEdge(graphView.getDefaultParent(), null, edge.getFirst(), vertices[i], vertices[edge.getSecond()]);
             }
         }
 
 
-        mxHierarchicalLayout hierarchicalLayout = new mxHierarchicalLayout(graphView);
-        hierarchicalLayout.setOrientation(SwingConstants.WEST);
-        hierarchicalLayout.execute(graphView.getDefaultParent());
+        mxCircleLayout circleLayout = new mxCircleLayout(graphView);
+        circleLayout.execute(graphView.getDefaultParent());
         new mxParallelEdgeLayout(graphView).execute(graphView.getDefaultParent());
 
 
@@ -92,7 +96,7 @@ public class DFAviewer {
          * Display the window in the center of the screen.
          * */
         jFrame.setLocationRelativeTo(null);
-        jFrame.setMinimumSize(new Dimension(750, 500));
+
 
         FrameDragListener frameDragListener = new FrameDragListener(jFrame);
         jFrame.addMouseListener(frameDragListener);

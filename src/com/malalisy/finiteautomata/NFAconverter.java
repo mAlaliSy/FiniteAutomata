@@ -12,11 +12,13 @@ public class NFAconverter {
     private Set<String>[][] stateGraph;
     private Set<Set<Integer>> markedStates;
     private Set<Set<Integer>> unmarkedStates;
+    private Set<Integer> acceptedEnds;
 
-    public NFAconverter(Set<String>[][] stateGraph) {
+    public NFAconverter(Set<String>[][] stateGraph, Set<Integer> acceptedEnds) {
         this.stateGraph = stateGraph;
         markedStates = new HashSet<>();
         unmarkedStates = new HashSet<>();
+        this.acceptedEnds = acceptedEnds;
     }
 
     public DFA convert() {
@@ -56,10 +58,12 @@ public class NFAconverter {
 
             }
 
+            unmarkedStates.addAll(itemsToBeAdded);
             unmarkedStates.removeAll(itemsToBeRemoved);
-            itemsToBeAdded.addAll(itemsToBeAdded);
 
         }
+
+        dfa.markAcceptedEnd(acceptedEnds);
 
         return dfa;
     }

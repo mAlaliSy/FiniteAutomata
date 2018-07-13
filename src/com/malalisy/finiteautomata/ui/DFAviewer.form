@@ -48,7 +48,7 @@
               <foreground color="-1"/>
               <horizontalAlignment value="0"/>
               <horizontalTextPosition value="0"/>
-              <text value="NFA to DFA Converter"/>
+              <text value="DFA Viewer"/>
             </properties>
           </component>
           <component id="86c29" class="javax.swing.JLabel" binding="xLabel">

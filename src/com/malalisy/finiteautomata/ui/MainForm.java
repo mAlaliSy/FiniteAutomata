@@ -2,6 +2,8 @@ package com.malalisy.finiteautomata.ui;
 
 import com.malalisy.finiteautomata.Constants;
 import com.malalisy.finiteautomata.NFAconverter;
+import com.malalisy.finiteautomata.Pair;
+import com.malalisy.finiteautomata.Utils;
 import com.malalisy.finiteautomata.ui.components.FrameDragListener;
 import com.malalisy.finiteautomata.ui.components.GraphView;
 import com.mxgraph.layout.hierarchical.mxHierarchicalLayout;
@@ -31,19 +33,25 @@ public class MainForm {
     private JButton removeButton;
     private JLabel xLabel;
     private JButton convertButton;
+    private JButton loadExampleButton;
+    private JButton clearButton;
+    private JTextField acceptedEndsTextField;
 
 
+    private GraphView graphView;
+    private mxGraphComponent graphComponent;
     private int stateCounter;
 
     public MainForm() {
 
         stateCounter = 0;
-        GraphView graphView = new GraphView();
+        graphView = new GraphView();
 
-        mxGraphComponent graphComponent = new mxGraphComponent(graphView);
-        graphComponent.getViewport().setBackground(Constants.BACKGROUND_COLOR);
+        graphComponent = new mxGraphComponent(graphView);
 
         graphPanel.add(graphComponent);
+
+        graphComponent.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         xLabel.setOpaque(true);
         xLabel.addMouseListener(new MouseListener() {
@@ -102,9 +110,9 @@ public class MainForm {
 
         graphView.getSelectionModel().addListener(mxEvent.CHANGE, (o, mxEventObject) -> {
             if (graphView.getSelectionCell() != null)
-                removeButton.setVisible(true);
+                removeButton.setEnabled(true);
             else
-                removeButton.setVisible(false);
+                removeButton.setEnabled(false);
         });
 
 
@@ -140,14 +148,37 @@ public class MainForm {
                 }
             }
 
-            NFAconverter nfAconverter = new NFAconverter(adjacencyMatrix);
-            DFAviewer dfAviewer = new DFAviewer(nfAconverter.convert());
-            dfAviewer.show();
+            Set<Integer> acceptedEnds = new HashSet<>();
+            String[] acc = acceptedEndsTextField.getText().split(",");
+
+            try {
+                for (String state : acc)
+                    acceptedEnds.add(Integer.valueOf(state));
+
+                NFAconverter nfAconverter = new NFAconverter(adjacencyMatrix, acceptedEnds);
+                DFAviewer dfAviewer = new DFAviewer(nfAconverter.convert());
+                dfAviewer.show();
+            } catch (NumberFormatException ex) {
+                JOptionPane.showMessageDialog(null, "INVALID ACCEPTED ENDS INPUT!", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
         });
+        loadExampleButton.addActionListener(actionEvent -> {
+            clearAll();
+            Pair<Set<String>[][], Set<Integer>> defaultExample = Utils.getTheDefaultExample();
+            Set<String>[][] defaultGraph = defaultExample.getFirst();
+
+            Utils.drawGraphFromAdjMatrix(defaultGraph, graphView, graphComponent);
+            stateCounter = defaultGraph.length;
+
+            acceptedEndsTextField.setText(Utils.intSetToString(defaultExample.getSecond()));
+            System.out.println(defaultExample.getSecond().size());
+        });
+        clearButton.addActionListener(actionEvent -> clearAll());
     }
 
-    public static void main(String[] args) {
-
+    private void clearAll() {
+        graphView.selectAll();
+        graphView.removeCells(graphView.getSelectionCells());
     }
 
     public void show() {
@@ -171,7 +202,7 @@ public class MainForm {
          * Display the window in the center of the screen.
          * */
         jFrame.setLocationRelativeTo(null);
-        jFrame.setMinimumSize(new Dimension(750, 500));
+        jFrame.setSize(new Dimension(850, 450));
 
         FrameDragListener frameDragListener = new FrameDragListener(jFrame);
         jFrame.addMouseListener(frameDragListener);

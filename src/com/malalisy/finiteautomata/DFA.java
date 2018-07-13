@@ -1,6 +1,7 @@
 package com.malalisy.finiteautomata;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -11,9 +12,12 @@ public class DFA {
     /*Adjacency list for graph representation*/
     private List<List<Pair<String, Integer>>> adjacencyList;
 
+    private Set<Integer> acceptedEnds;
+
     public DFA() {
         vertices = new ArrayList<>();
         adjacencyList = new ArrayList<>();
+        acceptedEnds = new HashSet<>();
     }
 
     public void addVertex(Set<Integer> state) {
@@ -58,4 +62,22 @@ public class DFA {
     public List<List<Pair<String, Integer>>> getAdjacencyList() {
         return adjacencyList;
     }
+
+    public void markAcceptedEnd(Set<Integer> acceptedEnds) {
+
+        int i = 0;
+        for (Set<Integer> state : vertices) {
+
+            for (int acceptedEnd : acceptedEnds) {
+                if (state.contains(acceptedEnd))
+                    this.acceptedEnds.add(i);
+            }
+            i++;
+        }
+    }
+
+    public boolean isAcceptedEnd(int stateNumber) {
+        return acceptedEnds.contains(stateNumber);
+    }
+
 }

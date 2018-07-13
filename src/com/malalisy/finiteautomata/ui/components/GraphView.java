@@ -14,16 +14,28 @@ public class GraphView extends mxGraph {
 
     public GraphView() {
 
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = stylesheet.getDefaultVertexStyle();
         map.put(mxConstants.STYLE_FONTCOLOR, "white");
         map.put(mxConstants.STYLE_FILLCOLOR, Utils.toHexString(Constants.MAIN_COLOR));
-        map.put(mxConstants.STYLE_STROKECOLOR, Utils.toHexString(Constants.MAIN_COLOR));
-        map.put(mxConstants.STYLE_SHAPE, "ellipse");
+        map.put(mxConstants.STYLE_STROKECOLOR, Utils.toHexString(Constants.STROKE_COLOR));
+        map.put(mxConstants.STYLE_SHAPE, mxConstants.SHAPE_ELLIPSE);
         stylesheet.setDefaultVertexStyle(map);
-        map = new HashMap<>();
-        map.put(mxConstants.STYLE_SHAPE, mxConstants.SHAPE_CONNECTOR);
+
+        map = stylesheet.getDefaultEdgeStyle();
         map.put(mxConstants.STYLE_STROKECOLOR, "#888");
-        map.put(mxConstants.STYLE_ENDARROW, mxConstants.ARROW_CLASSIC);
+        map.put(mxConstants.STYLE_FONTCOLOR, "#0DBE62");
+        map.put(mxConstants.STYLE_FONTSIZE, 18);
+
+
+        map.put(mxConstants.STYLE_VERTICAL_ALIGN, mxConstants.ALIGN_CENTER);
+        map.put(mxConstants.STYLE_ALIGN, mxConstants.ALIGN_CENTER);
+
+
+        // Make the edges curved
+        map.put(mxConstants.STYLE_ROUNDED, true);
+        map.put(mxConstants.STYLE_EDGE, mxConstants.EDGESTYLE_ENTITY_RELATION);
+
+
         stylesheet.setDefaultEdgeStyle(map);
 
     }
