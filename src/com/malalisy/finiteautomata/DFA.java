@@ -40,21 +40,6 @@ public class DFA {
         addEdge(sIndex, tIndex, move);
     }
 
-
-    public void print() {
-        for (int i = 0; i < vertices.size(); i++) {
-            System.out.println("State " + i + " that contains: " + vertices.get(i).toString() + ": ");
-            for (int j = 0; j < adjacencyList.get(i).size(); j++) {
-                int destinationStateNumber = adjacencyList.get(i).get(j).getSecond();
-                System.out.println("\tTo state " + destinationStateNumber +
-                        " that contains: " + vertices.get(destinationStateNumber).toString()
-                        + " => Move: " + adjacencyList.get(i).get(j).getFirst());
-            }
-
-            System.out.println("\n============\n");
-        }
-    }
-
     public List<Set<Integer>> getVertices() {
         return vertices;
     }

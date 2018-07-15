@@ -1,5 +1,6 @@
 package com.malalisy.finiteautomata.ui;
 
+import com.malalisy.finiteautomata.Constants;
 import com.malalisy.finiteautomata.DFA;
 import com.malalisy.finiteautomata.Pair;
 import com.malalisy.finiteautomata.ui.components.FrameDragListener;
@@ -38,11 +39,11 @@ public class DFAviewer {
             if (dfa.isAcceptedEnd(i)) {
                 vertices[i] = graphView.insertVertex(graphView.getDefaultParent(),
                         null, "" + i, 0, 0,
-                        50, 50, "shape=doubleEllipse;");
+                        Constants.WIDTH, Constants.HEIGHT, "shape=doubleEllipse;");
             } else {
                 vertices[i] = graphView.insertVertex(graphView.getDefaultParent(),
                         null, "" + i, 0, 0,
-                        50, 50);
+                        Constants.WIDTH, Constants.HEIGHT);
             }
         }
 

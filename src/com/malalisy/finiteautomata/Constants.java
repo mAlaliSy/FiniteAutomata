@@ -13,8 +13,8 @@ public final class Constants {
     public static final Color BACKGROUND_COLOR = new Color(249, 248, 253);
 
 
-    public static final int WIDTH = 70;
-    public static final int HEIGHT = 70;
+    public static final int WIDTH = 50;
+    public static final int HEIGHT = 50;
 
 
 }

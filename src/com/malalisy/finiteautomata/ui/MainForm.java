@@ -175,6 +175,7 @@ public class MainForm {
         clearButton.addActionListener(actionEvent -> {
             clearAll();
             acceptedEndsTextField.setText("");
+            stateCounter = 0;
         });
     }
 
