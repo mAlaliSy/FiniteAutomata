@@ -171,9 +171,11 @@ public class MainForm {
             stateCounter = defaultGraph.length;
 
             acceptedEndsTextField.setText(Utils.intSetToString(defaultExample.getSecond()));
-            System.out.println(defaultExample.getSecond().size());
         });
-        clearButton.addActionListener(actionEvent -> clearAll());
+        clearButton.addActionListener(actionEvent -> {
+            clearAll();
+            acceptedEndsTextField.setText("");
+        });
     }
 
     private void clearAll() {
