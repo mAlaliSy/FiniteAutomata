@@ -8,9 +8,8 @@ public final class Constants {
 
     public static final String EPSILON = "ep";
 
-    public static final Color MAIN_COLOR = new Color(255, 98, 24);
+    public static final Color MAIN_COLOR = new Color(255, 105, 0);
     public static final Color STROKE_COLOR = new Color(255, 255, 255);
-    public static final Color BACKGROUND_COLOR = new Color(249, 248, 253);
 
 
     public static final int WIDTH = 50;

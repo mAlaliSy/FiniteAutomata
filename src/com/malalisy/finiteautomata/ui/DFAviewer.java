@@ -30,7 +30,7 @@ public class DFAviewer {
         this.dfa = dfa;
 
 
-        GraphView graphView = new GraphView();
+        GraphView graphView = new GraphView(false, true);
         mxGraphComponent graphComponent = new mxGraphComponent(graphView);
 
         List<Set<Integer>> v = dfa.getVertices();

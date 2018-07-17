@@ -45,7 +45,7 @@ public class MainForm {
     public MainForm() {
 
         stateCounter = 0;
-        graphView = new GraphView();
+        graphView = new GraphView(true, false);
 
         graphComponent = new mxGraphComponent(graphView);
 
@@ -86,6 +86,7 @@ public class MainForm {
             graphView.insertVertex(graphView.getDefaultParent(), null, stateCounter + "", 100, 100, Constants.WIDTH, Constants.HEIGHT);
             graphView.getModel().endUpdate();
             stateCounter++;
+
         });
         removeButton.addActionListener(actionEvent -> {
             graphView.getModel().beginUpdate();
@@ -116,10 +117,7 @@ public class MainForm {
         });
 
 
-        graphComponent.getConnectionHandler().addListener(mxEvent.CONNECT, (o, mxEventObject) ->
-                new mxParallelEdgeLayout(graphView).execute(graphView.getDefaultParent())
-
-        );
+        graphComponent.getConnectionHandler().addListener(mxEvent.CONNECT, (o, mxEventObject) -> new mxParallelEdgeLayout(graphView).execute(graphView.getDefaultParent()));
 
         convertButton.addActionListener(actionEvent -> {
             int vertices = graphView.getChildVertices(graphView.getDefaultParent()).length;
@@ -164,6 +162,7 @@ public class MainForm {
         });
         loadExampleButton.addActionListener(actionEvent -> {
             clearAll();
+            graphView.setEdgesRounded(true);
             Pair<Set<String>[][], Set<Integer>> defaultExample = Utils.getTheDefaultExample();
             Set<String>[][] defaultGraph = defaultExample.getFirst();
 
@@ -182,6 +181,7 @@ public class MainForm {
     private void clearAll() {
         graphView.selectAll();
         graphView.removeCells(graphView.getSelectionCells());
+        graphView.setEdgesRounded(false);
     }
 
     public void show() {

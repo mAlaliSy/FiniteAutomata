@@ -12,7 +12,10 @@ import java.util.Map;
 
 public class GraphView extends mxGraph {
 
-    public GraphView() {
+    boolean isEdgeEditable;
+
+    public GraphView(boolean isEdgeEditable, boolean roundEdges) {
+        this.isEdgeEditable = isEdgeEditable;
 
         Map<String, Object> map = stylesheet.getDefaultVertexStyle();
         map.put(mxConstants.STYLE_FONTCOLOR, "white");
@@ -32,9 +35,10 @@ public class GraphView extends mxGraph {
 
 
         // Make the edges curved
-        map.put(mxConstants.STYLE_ROUNDED, true);
-        map.put(mxConstants.STYLE_EDGE, mxConstants.EDGESTYLE_ENTITY_RELATION);
-
+        if (roundEdges) {
+            map.put(mxConstants.STYLE_ROUNDED, true);
+            map.put(mxConstants.STYLE_EDGE, mxConstants.EDGESTYLE_ENTITY_RELATION);
+        }
 
         stylesheet.setDefaultEdgeStyle(map);
 
@@ -43,7 +47,7 @@ public class GraphView extends mxGraph {
 
     @Override
     public boolean isCellEditable(Object o) {
-        return model.isEdge(o);
+        return isEdgeEditable && model.isEdge(o);
     }
 
     @Override
@@ -64,5 +68,17 @@ public class GraphView extends mxGraph {
     @Override
     public boolean isCellDeletable(Object o) {
         return true;
+    }
+
+    public void setEdgesRounded(boolean isEdgeRounded) {
+
+        Map<String, Object> map = stylesheet.getDefaultEdgeStyle();
+        map.put(mxConstants.STYLE_ROUNDED, isEdgeRounded);
+        if (isEdgeRounded) {
+            map.put(mxConstants.STYLE_EDGE, mxConstants.EDGESTYLE_ENTITY_RELATION);
+        } else {
+            map.put(mxConstants.STYLE_EDGE, mxConstants.STYLE_NOEDGESTYLE);
+        }
+        stylesheet.setDefaultEdgeStyle(map);
     }
 }
