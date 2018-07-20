@@ -1,6 +1,13 @@
 # FiniteAutomata Converter (NFA to DFA)
 This is a programming assignment for Compiler Design course.
 
+### IDE Used:
+[IntelliJ IDEA](https://www.jetbrains.com/idea/)
+### Libraries Used:
+* [JGraphX](https://github.com/jgraph/jgraphx)
+
+
+
 The program is required to convert a NFA to DFA using the following algorithm:
 ```
 put  e-closure({s0}) as an unmarked  state into the set of DFA (DS)
